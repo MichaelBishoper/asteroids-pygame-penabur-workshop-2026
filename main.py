@@ -35,6 +35,7 @@ laser_buffer_counter: float = 0.0
 asteroid_buffer_counter: float = 0.0
 
 while True:
+    print(player.health)
     game_screen.blit(background, (0, 0))
     
     # get deltatime
