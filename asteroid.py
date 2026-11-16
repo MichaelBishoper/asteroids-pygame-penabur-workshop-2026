@@ -29,7 +29,10 @@ class Asteroid:
         sprite_copy = pygame.transform.rotate(self.sprite, self.rotation)
         surface.blit(sprite_copy, self.rect)
         
-        # DEBUG
+        ##########################
+        # debug: show collisions #
+        ##########################
+        
         # pygame.draw.rect(surface, (0, 255, 0), self.rect, 1)
         
         

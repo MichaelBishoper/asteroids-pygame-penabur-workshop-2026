@@ -17,9 +17,11 @@ DAMAGE_COOLDOWN = 0.15
 EXPLOSION_SCALE = 0.5
 EXPLOSION_TIME = 0.25
 EXPLOSION_SIZE_VARIATION = 20
+FONT_SIZE = 65
 
 # Directory Variables
 BASE_DIR = Path(__file__).resolve().parent
 IMAGES_DIR = BASE_DIR / 'assets' / 'images'
 MUSIC_DIR = BASE_DIR / 'assets' / 'music'
 SFX_DIR = BASE_DIR / 'assets' / 'sfx'
+FONTS_DIR = BASE_DIR / 'assets' / 'fonts'

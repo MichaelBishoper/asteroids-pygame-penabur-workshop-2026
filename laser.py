@@ -27,6 +27,9 @@ class Laser:
         
         surface.blit(self.sprite, self.rect)
         
-        # DEBUG
+        ##########################
+        # debug: show collisions #
+        ##########################
+        
         # pygame.draw.rect(surface, (0, 255, 0), self.rect, 1)
         

@@ -11,9 +11,14 @@ class Explosion:
         self.rect: pygame.Rect = self.sprite.get_rect(center = self.position)
         self.time: float = time
         self.timer: float = 0.0
-        self.alive: bool = True
+        self.alive: bool = True # NOTE: an alive variable does not separate the concerns explosion from the game world itself and is hence bad OOP, but I am too lazy to refactor it
     
     def update(self, dt: float):
+        """Update the explosion's internal timeer. Sets self.alive to False when the timer runs out.
+
+        Args:
+            dt (float): The time elapsed since the last frame, in seconds (converted and defined in the main loop).
+        """
         self.timer = self.timer + dt
         
         # for main.py to know if an explosion should die
@@ -21,8 +26,13 @@ class Explosion:
             self.alive = False
     
     def draw(self, surface: pygame.Surface):
+        """Draws the explosion's current position.
+
+        Args:
+            surface (pygame.Surface): The surface to draw the explosion sprite on (defined in the main loop).
+        """
         sprite_copy = pygame.transform.scale(self.sprite, (self.sprite.get_width() * self.size_factor, self.sprite.get_height() * self.size_factor))
         sprite_copy = pygame.transform.rotate(sprite_copy, self.rotation)
-        new_rect = sprite_copy.get_rect(center=self.position)
+        new_rect = sprite_copy.get_rect(center=self.position) # get a new standardized collision rect so the explosion sprite doesn't drift since its size will be random.
         surface.blit(sprite_copy, new_rect)
     

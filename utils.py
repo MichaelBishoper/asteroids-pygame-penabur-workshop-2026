@@ -1,3 +1,5 @@
+# NOTE: There is a lot of code reuse, escpecially with get_random_asteroid_speed() and get_random_explosion_size(), but the separate names are more readable. Feel free to rewrite it though.
+
 import pygame
 import random
 from pygame.math import Vector2
@@ -10,14 +12,14 @@ def get_random_asteroid_position(screen_offset_x: int = 14, screen_offset_y: int
     rand_x = random.randint(screen_offset_x, WIDTH - screen_offset_x)
     return Vector2(rand_x, screen_offset_y)
 
-def get_random_asteroid_rotation() -> int:
+def get_random_rotation() -> int:
     """
         Returns an int between 0 and 360
     """
     rand_rot: int = random.randint(0, 360)
     return rand_rot
 
-def get_random_speed() -> int:
+def get_random_asteroid_speed() -> int:
     """
         Returns a variable int between -ASTEROID_SPEED_VARIATION% and ASTEROID_SPEED_VARIATION% of ASTEROID_SPEED
     """
@@ -73,4 +75,10 @@ def get_random_explosion_size() -> float:
     rand_size: float = rand_percent * EXPLOSION_SCALE
     return rand_size
 
-print(get_random_explosion_size())
+def get_random_score() -> int:
+    """
+        Returns a random float varying from 1000
+    """
+    rand_modifier = random.uniform(0.8, 1.2)
+    rand_score = rand_modifier * 1000
+    return int(rand_score)
