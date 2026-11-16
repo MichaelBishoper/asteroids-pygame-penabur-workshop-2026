@@ -14,6 +14,10 @@ python main.py
 ```
 **Note**: Use `python3` for linux and check your python PATH variable for windows as it may use a different alias.
 
+## Controls
+`arrow left` amd `arrow right` to move
+`x` to shoot
+
 # Credits
 Visual assets by [AX Assets](https://axassets.itch.io/spaceship-simple-assets) on Itch.io
 
