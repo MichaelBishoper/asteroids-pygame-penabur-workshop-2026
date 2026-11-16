@@ -5,7 +5,7 @@ from pygame.math import Vector2
 
 # Local Modules/Classes
 from settings import SCALED_HEIGHT, SCALED_WIDTH, HEIGHT, WIDTH, FPS, IMAGES_DIR, MUSIC_DIR, SFX_DIR, FONTS_DIR, LASER_BUFFER, ASTEROID_SPEED, ASTEROID_SPAWN_BUFFER, FONT_SIZE
-from utils import get_random_rotation, get_random_asteroid_position, get_random_asteroid_speed, is_laser_off_screen, is_asteroid_off_screen, get_random_explosion_size, get_random_score
+from utils import get_random_rotation, get_random_asteroid_position, get_random_asteroid_speed, is_laser_off_screen, is_asteroid_off_screen, get_random_explosion_size, get_random_score, get_asteroid_speed
 from player import Player
 from laser import Laser
 from asteroid import Asteroid
@@ -20,10 +20,18 @@ clock = pygame.time.Clock()
 
 # load sfx
 sfx_laser = pygame.mixer.Sound(str(SFX_DIR / 'asteroids_laser.wav'))
-sfx_destroy = pygame.mixer.Sound(str(SFX_DIR / 'sfx_asteroid_destroyed.wav'))
+sfx_destroy = pygame.mixer.Sound(str(SFX_DIR / 'sfx_asteroid_destroyed_2.wav'))
+sfx_hit = pygame.mixer.Sound(str(SFX_DIR / 'sfx_player_hit.wav'))
+
+# load and play music
+music = pygame.mixer.music.load(str(MUSIC_DIR / 'main_music.ogg'))
+pygame.mixer.music.set_volume(0.8)
+pygame.mixer.music.play(-1)
+
 # set sfx volumes
-sfx_laser.set_volume(0.2)
-sfx_destroy.set_volume(0.8)
+sfx_laser.set_volume(0.15)
+sfx_destroy.set_volume(0.71)
+sfx_hit.set_volume(0.8)
 
 # load sprites
 background: pygame.Surface = pygame.image.load(str(IMAGES_DIR / 'background_stars.png'))
@@ -57,6 +65,9 @@ lasers: list[Laser] = []
 asteroids: list[Asteroid] = []
 explosions: list[Explosion] = []
 
+asteroids_destroyed: int = 0
+asteroid_counter: int = 0
+
 # DO NOT TOUCH
 # counters
 laser_buffer_counter: float = 0.0
@@ -88,6 +99,14 @@ while True:
         case _:
             health_bar.sprite = no_health
     
+    ASTEROID_SPEED = get_asteroid_speed(asteroids_destroyed)
+    
+    # decreases the rate of spawn of asteroids every 5 asteroids destroyed
+    if asteroid_counter == 5:
+        next_spawn_buffer = max(0.45, ASTEROID_SPAWN_BUFFER - 0.2)
+        ASTEROID_SPAWN_BUFFER = next_spawn_buffer
+        asteroid_counter = 0
+    
     ##################################
     # -- Spawn Lasers/Obstacles -- #
     ##################################
@@ -102,7 +121,7 @@ while True:
             laser_buffer_counter = LASER_BUFFER # fill back the counter after a laser is fired
     
     if asteroid_buffer_counter == 0:
-        asteroids.append(Asteroid(get_random_asteroid_position(), get_random_rotation(), get_random_asteroid_speed()))
+        asteroids.append(Asteroid(get_random_asteroid_position(), get_random_rotation(), get_random_asteroid_speed(ASTEROID_SPEED)))
         asteroid_buffer_counter = ASTEROID_SPAWN_BUFFER # fill the counter after an asteroid is spawned
     
     ##########################
@@ -133,6 +152,10 @@ while True:
                     # -- collision -- #
                     sfx_destroy.play()
                     player.score += get_random_score()
+                    
+                    asteroids_destroyed += 1
+                    asteroid_counter += 1
+                    
                     # -- spawn an explosion object -- #
                     # NOTE: explosion timer logic is inside its class
                     explosions.append(Explosion(l.position, get_random_rotation(), get_random_explosion_size()))
@@ -144,8 +167,13 @@ while True:
     for a in asteroids:
         if a.rect.colliderect(player.rect):
                 # -- collision -- #
+                sfx_hit.play()
+                
+                asteroids_destroyed += 1
+                asteroid_counter += 1
+                
                 asteroids_to_remove.append(a)
-                player.take_damage()
+                player.take_damage()          
                 break
 
     # append dead collisions

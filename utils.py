@@ -2,8 +2,9 @@
 
 import pygame
 import random
+import math
 from pygame.math import Vector2
-from settings import WIDTH, HEIGHT, ASTEROID_SPEED, ASTEROID_SPEED_VARIATION, EXPLOSION_SIZE_VARIATION, EXPLOSION_SCALE
+from settings import WIDTH, HEIGHT, ASTEROID_SPEED, ASTEROID_SPEED_VARIATION, EXPLOSION_SIZE_VARIATION, EXPLOSION_SCALE, ASTEROID_SPEED_CHANGE_OVER_TIME
 
 def get_random_asteroid_position(screen_offset_x: int = 14, screen_offset_y: int = -30) -> Vector2:
     """
@@ -19,7 +20,7 @@ def get_random_rotation() -> int:
     rand_rot: int = random.randint(0, 360)
     return rand_rot
 
-def get_random_asteroid_speed() -> int:
+def get_random_asteroid_speed(asteroid_speed: int = ASTEROID_SPEED) -> int:
     """
         Returns a variable int between -ASTEROID_SPEED_VARIATION% and ASTEROID_SPEED_VARIATION% of ASTEROID_SPEED
     """
@@ -32,7 +33,9 @@ def get_random_asteroid_speed() -> int:
     
     rand_percent: float = (100 + (rand_sign * random.randint(0, ASTEROID_SPEED_VARIATION)))/100
     
-    rand_speed: int = int(ASTEROID_SPEED * rand_percent)
+    rand_speed: int = int(asteroid_speed * rand_percent)
+    print("asteroid speed global: ", asteroid_speed)
+    print(rand_speed)
     return rand_speed
 
 def is_laser_off_screen(position: Vector2, offset: int = 10) -> bool:
@@ -82,3 +85,6 @@ def get_random_score() -> int:
     rand_modifier = random.uniform(0.8, 1.2)
     rand_score = rand_modifier * 1000
     return int(rand_score)
+
+def get_asteroid_speed(aasteroids_destroyed: int, a: int = 35) -> int:
+    return int(a*math.pow(ASTEROID_SPEED_CHANGE_OVER_TIME, aasteroids_destroyed))
