@@ -8,6 +8,10 @@ git clone https://github.com/MichaelBishoper/asteroids-pygame-penabur-workshop-2
 cd asteroids-pygame-penabur-workshop-2026
 ```
 ## Running the Game
+Install dependencies:
+```
+pip install pygame-ce
+```
 From the project root:
 ```
 python main.py
@@ -19,6 +23,10 @@ python main.py
 
 `x` to shoot
 
+## Screenshots
+![Screenshot 1](/screenshots/ss_2.png)
+![Screenshot 2](/screenshots/ss_1.png)
+
 # Credits
 Visual assets by [AX Assets](https://axassets.itch.io/spaceship-simple-assets) on Itch.io
 
@@ -28,7 +36,7 @@ Music by MichaelBishoper
 
 Developed by MichaelBishoper
 
-## License
+# License
 The MIT License (MIT)
 
 Copyright (c) 2026 MichaelBishoper
