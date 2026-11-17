@@ -1,6 +1,6 @@
 import pygame
 from pygame.math import Vector2
-from settings import PLAYER_SPEED, IMAGES_DIR, DAMAGE_COOLDOWN
+from settings import PLAYER_SPEED, IMAGES_DIR, DAMAGE_COOLDOWN, WIDTH, HEIGHT
 
 class Player:
     def __init__(self, position: Vector2):
@@ -37,11 +37,11 @@ S
         # returns a list of all keys currently pressed this frame
         keys = pygame.key.get_pressed()
         
-        if keys[pygame.K_LEFT]:
+        if keys[pygame.K_LEFT] and self.health > 0:
             next_position = self.position.x - PLAYER_SPEED * dt
             self.position.x = max(next_position, 16)
             
-        if keys[pygame.K_RIGHT]:
+        if keys[pygame.K_RIGHT] and self.health > 0:
             next_position = self.position.x + PLAYER_SPEED * dt
             self.position.x = min(next_position, 83)
         
@@ -64,8 +64,15 @@ S
     def take_damage(self):
         """Decreases the player health by 1, changes the sprite to the hurt sprite and fills the damage_cooldown timer. 
         """
-        if self.damage_cooldown == 0.0:
+        if self.damage_cooldown == 0.0: 
             next_health: int = self.health - 1
             self.health = max(next_health, 0)
             self.current_sprite = self.hurt_sprite
             self.damage_cooldown = DAMAGE_COOLDOWN
+            
+    def reset(self):
+        """Resets the player's state to its starting state
+        """
+        self.health = 4
+        self.score = 0
+        self.position = Vector2(WIDTH/2, HEIGHT/1.25)

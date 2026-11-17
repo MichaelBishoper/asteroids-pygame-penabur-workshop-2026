@@ -1,6 +1,11 @@
 from pathlib import Path
 
 # Game Variables
+# these are changed dynamically as the game progresses
+asteroid_speed = 35 
+asteroid_spawn_buffer = 2.5 
+
+# Game Constants. Change to Preference.
 WIDTH = 100
 HEIGHT = 100
 SCALED_WIDTH = 1000
@@ -9,10 +14,8 @@ FPS = 60
 PLAYER_SPEED = 80
 LASER_SPEED = 80
 LASER_BUFFER = 0.5
-ASTEROID_SPEED = 35 # NOTE: this is not a constant T_T
-ASTEROID_SPAWN_BUFFER = 2.5
 ASTEROID_SPEED_VARIATION = 25
-ASTEROID_SPEED_CHANGE_OVER_TIME = 1.024
+ASTEROID_SPEED_CHANGE_OVER_TIME = 1.024 # the parameter x of this function: https://www.desmos.com/calculator/3fisjexbvp?lang=id
 PLAYER_HEALTH = 4
 DAMAGE_COOLDOWN = 0.15
 EXPLOSION_SCALE = 0.5
@@ -20,7 +23,7 @@ EXPLOSION_TIME = 0.25
 EXPLOSION_SIZE_VARIATION = 20
 FONT_SIZE = 65
 
-# Directory Variables
+# Directory Constants
 BASE_DIR = Path(__file__).resolve().parent
 IMAGES_DIR = BASE_DIR / 'assets' / 'images'
 MUSIC_DIR = BASE_DIR / 'assets' / 'music'

@@ -24,7 +24,7 @@ class Asteroid:
         """Draws the asteroid's current position.
 
         Args:
-            surface (pygame.Surface): The surface to draw the player sprite on (defined in the main loop).
+            surface (pygame.Surface): The surface to draw the asteroid sprite on (defined in the main loop).
         """
         sprite_copy = pygame.transform.rotate(self.sprite, self.rotation)
         surface.blit(sprite_copy, self.rect)
@@ -34,5 +34,3 @@ class Asteroid:
         ##########################
         
         # pygame.draw.rect(surface, (0, 255, 0), self.rect, 1)
-        
-        

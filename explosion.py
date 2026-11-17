@@ -21,7 +21,8 @@ class Explosion:
         """
         self.timer = self.timer + dt
         
-        # for main.py to know if an explosion should die
+        # check timer after incrementing
+        # explosion death logic is handled in main.py
         if self.timer >= self.time:
             self.alive = False
     
@@ -35,4 +36,3 @@ class Explosion:
         sprite_copy = pygame.transform.rotate(sprite_copy, self.rotation)
         new_rect = sprite_copy.get_rect(center=self.position) # get a new standardized collision rect so the explosion sprite doesn't drift since its size will be random.
         surface.blit(sprite_copy, new_rect)
-    

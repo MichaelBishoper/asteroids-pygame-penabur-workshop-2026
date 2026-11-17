@@ -22,7 +22,7 @@ class Laser:
         """Draws the laser's current position.
 
         Args:
-            surface (pygame.Surface): The surface to draw the player sprite on (defined in the main loop).
+            surface (pygame.Surface): The surface to draw the laser sprite on (defined in the main loop).
         """
         
         surface.blit(self.sprite, self.rect)
@@ -32,4 +32,3 @@ class Laser:
         ##########################
         
         # pygame.draw.rect(surface, (0, 255, 0), self.rect, 1)
-        
